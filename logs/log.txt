@@ -1,0 +1,5 @@
+15:16:50.210 [] [main] DEBUG com.revature.Driver - I am a debug log
+15:16:50.211 [] [main] INFO  com.revature.Driver - I am an info log
+15:16:50.212 [] [main] WARN  com.revature.Driver - I am a warning log
+15:16:50.212 [] [main] ERROR com.revature.Driver - I am an error log
+15:16:50.212 [] [main] TRACE com.revature.Driver - I am a trace log
