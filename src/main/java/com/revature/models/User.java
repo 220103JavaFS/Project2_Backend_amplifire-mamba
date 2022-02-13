@@ -1,13 +1,14 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users") //table name will default to 'user' without this line which SQL doesn't like
 public class User {
-
-    //TODO: consider adding list<Category> so a user can keep track of their favorite question types
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,16 +31,21 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Statistic> userStats;
+
     public User() {
     }
 
-    public User(int userId, String username, String password, String email, String firstName, String lastName) {
+    public User(int userId, String username, String password, String email, String firstName, String lastName, List<Statistic> userStats) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userStats = userStats;
     }
 
     public int getUserId() {
@@ -90,17 +96,25 @@ public class User {
         this.lastName = lastName;
     }
 
+    public List<Statistic> getUserStats() {
+        return userStats;
+    }
+
+    public void setUserStats(List<Statistic> userStats) {
+        this.userStats = userStats;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName);
+        return userId == user.userId && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userStats, user.userStats);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, password, email, firstName, lastName);
+        return Objects.hash(userId, username, password, email, firstName, lastName, userStats);
     }
 
     @Override
@@ -112,6 +126,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", userStats=" + userStats +
                 '}';
     }
 }
