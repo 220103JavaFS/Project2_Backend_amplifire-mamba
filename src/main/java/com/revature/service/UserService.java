@@ -29,14 +29,14 @@ public class UserService {
         return new User();
     }
 
-    public boolean saveUser(User user){
+    public int saveUser(User user){
         try {
             userDAO.save(user);
         }catch(Exception e){
             e.printStackTrace();
-            return false;
+            return 1;
         }
-        return true;
+        return 0;
     }
 
     public boolean deleteUser(int id){

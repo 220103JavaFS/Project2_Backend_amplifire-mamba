@@ -1,11 +1,10 @@
 package com.revature.models;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users") //table name will default to 'user' without this line which SQL doesn't like
 public class User {
 
     //TODO: consider adding list<Category> so a user can keep track of their favorite question types
@@ -27,7 +26,8 @@ public class User {
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    //last name is allowed to be null, but not first name
+    @Column(name = "last_name")
     private String lastName;
 
     public User() {

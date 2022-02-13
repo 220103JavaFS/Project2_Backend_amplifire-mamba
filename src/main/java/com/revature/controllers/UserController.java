@@ -33,11 +33,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        if(userService.saveUser(user)){
-            return ResponseEntity.status(201).build();
-        }
-        return ResponseEntity.status(400).build();
+    public ResponseEntity<Integer> addUser(@RequestBody User user){
+        //Attempt to create a new user. A returned value of 0 means it worked,
+        //otherwise an appropriate error code is returned
+        Integer errorCode = userService.saveUser(user);
+        if (errorCode == 0) return ResponseEntity.status(201).body(errorCode);
+
+        return ResponseEntity.status(400).body(errorCode);
     }
 
     @DeleteMapping("/{id}")
