@@ -2,6 +2,7 @@ package com.revature.service;
 
 
 import com.revature.models.User;
+import com.revature.models.UserDTO;
 import com.revature.repo.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,5 +49,14 @@ public class UserService {
             return false;
         }
         return true;
+    }
+
+    public User getUserByUsername(UserDTO userDTO) {
+        String username = userDTO.getUsername();
+        Optional<User> user = userDAO.findByUsername(username);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        return new User();
     }
 }
