@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
+
+import static com.revature.utils.Encryptor.encodePassword;
 
 public class LoginController {
 
@@ -22,7 +25,9 @@ public class LoginController {
     @PutMapping
     public ResponseEntity<User> getUserByUsername(@RequestBody UserDTO userDTO, HttpServletRequest request){
         User user = userService.getUserByUsername(userDTO);
+        String givenPass = userDTO.getPassword();
         if(user!=null){
+            if (encodePassword(givenPass) == user.getPassword())
             request.getSession().setAttribute("user", user.getUserId());
             return ResponseEntity.status(200).build();
         }

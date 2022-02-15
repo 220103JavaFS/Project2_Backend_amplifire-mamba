@@ -51,7 +51,7 @@ public class UserService {
         return true;
     }
 
-    public User getUserByUsername(UserDTO userDTO){
+    public User getUserByUsername(UserDTO userDTO) {
         String username = userDTO.getUsername();
         Optional<User> user = userDAO.findByUsername(username);
         if (user.isPresent()) {
