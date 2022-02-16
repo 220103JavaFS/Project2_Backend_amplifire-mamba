@@ -1,6 +1,8 @@
 package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -62,6 +64,110 @@ public class Statistic {
         this.hardestAttempted = hardestAttempted;
     }
 
+    public int getStatId() {
+        return statId;
+    }
+
+    public void setStatId(int statId) {
+        this.statId = statId;
+    }
+
+    public User getStatOwner() {
+        return statOwner;
+    }
+
+    public void setStatOwner(User statOwner) {
+        this.statOwner = statOwner;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public int getEasiestCorrect() {
+        return easiestCorrect;
+    }
+
+    public void setEasiestCorrect(int easiestCorrect) {
+        this.easiestCorrect = easiestCorrect;
+    }
+
+    public int getEasiestAttempted() {
+        return easiestAttempted;
+    }
+
+    public void setEasiestAttempted(int easiestAttempted) {
+        this.easiestAttempted = easiestAttempted;
+    }
+
+    public int getEasyCorrect() {
+        return easyCorrect;
+    }
+
+    public void setEasyCorrect(int easyCorrect) {
+        this.easyCorrect = easyCorrect;
+    }
+
+    public int getEasyAttempted() {
+        return easyAttempted;
+    }
+
+    public void setEasyAttempted(int easyAttempted) {
+        this.easyAttempted = easyAttempted;
+    }
+
+    public int getMediumCorrect() {
+        return mediumCorrect;
+    }
+
+    public void setMediumCorrect(int mediumCorrect) {
+        this.mediumCorrect = mediumCorrect;
+    }
+
+    public int getMediumAttempted() {
+        return mediumAttempted;
+    }
+
+    public void setMediumAttempted(int mediumAttempted) {
+        this.mediumAttempted = mediumAttempted;
+    }
+
+    public int getHardCorrect() {
+        return hardCorrect;
+    }
+
+    public void setHardCorrect(int hardCorrect) {
+        this.hardCorrect = hardCorrect;
+    }
+
+    public int getHardAttempted() {
+        return hardAttempted;
+    }
+
+    public void setHardAttempted(int hardAttempted) {
+        this.hardAttempted = hardAttempted;
+    }
+
+    public int getHardestCorrect() {
+        return hardestCorrect;
+    }
+
+    public void setHardestCorrect(int hardestCorrect) {
+        this.hardestCorrect = hardestCorrect;
+    }
+
+    public int getHardestAttempted() {
+        return hardestAttempted;
+    }
+
+    public void setHardestAttempted(int hardestAttempted) {
+        this.hardestAttempted = hardestAttempted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,9 +183,10 @@ public class Statistic {
 
     @Override
     public String toString() {
+        //to avoid infinite recursion, don't print out stat owner when printing out the statistic
         return "Statistic{" +
                 "statId=" + statId +
-                ", statOwner=" + statOwner +
+                //", statOwner=" + statOwner +
                 ", categoryName='" + categoryName + '\'' +
                 ", easiestCorrect=" + easiestCorrect +
                 ", easiestAttempted=" + easiestAttempted +
