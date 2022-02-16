@@ -1,18 +1,15 @@
 package com.revature;
 
-import com.revature.utils.Encryptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class Project2BackendApplication {
+public class Project2BackendApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Project2BackendApplication.class, args);
-
-		String testString = "Hello, World";
-		String encryptedString = Encryptor.encodePassword(testString);
-
+		System.out.println("yeeeeet");
 
 	}
 

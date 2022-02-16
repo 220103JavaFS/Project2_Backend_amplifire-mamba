@@ -87,7 +87,7 @@ public class UserServiceTest {
     @Test
     @Order(4)
     public void saveUserTest() throws NoSuchAlgorithmException{
-        assertTrue(testInstance.saveUser(testUser));
+        assertEquals(0, testInstance.saveUser(testUser));
     }
 
     //=======================================================================================
