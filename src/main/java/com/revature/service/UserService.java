@@ -34,9 +34,7 @@ public class UserService {
     public int saveUser(User user){
         try {
             //before creating a new user, we have to first encrypt their password
-            System.out.println("Password before encryption: " + user.getPassword());
             user.setPassword(Encryptor.encodePassword(user.getPassword()));
-            System.out.println("Password after encryption: " + user.getPassword());
             userDAO.save(user);
         }catch(Exception e){
             e.printStackTrace();
