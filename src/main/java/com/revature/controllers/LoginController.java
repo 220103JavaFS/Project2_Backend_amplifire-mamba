@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.service.UserService;
+import com.revature.utils.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class LoginController {
         User user = userService.getUserByUsername(userDTO);
         String givenPass = userDTO.getPassword();
         if(user!=null){
-            if (encodePassword(givenPass).equals(user.getPassword())) {
+            if (Encryptor.encodePassword(givenPass).equals(user.getPassword())) {
                 request.getSession().setAttribute("user", user.getUserId());
                 return ResponseEntity.status(200).body(user);
             }

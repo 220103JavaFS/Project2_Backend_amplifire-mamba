@@ -2,6 +2,7 @@ package service;
 
 import com.revature.models.User;
 import com.revature.models.UserDTO;
+import com.revature.repo.MostPopulatedCategoriesDAO;
 import com.revature.repo.UserDAO;
 import com.revature.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
