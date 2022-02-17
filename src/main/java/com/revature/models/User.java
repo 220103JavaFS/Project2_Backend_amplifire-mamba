@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users") //table name will default to 'user' without this line which SQL doesn't like
-public class User {
+public class    User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
