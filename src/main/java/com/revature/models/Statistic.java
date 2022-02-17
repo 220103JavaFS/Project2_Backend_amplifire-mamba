@@ -13,7 +13,7 @@ public class Statistic {
     //this class is used to hold statistics on performance for each individual user in the database
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int statId;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -16,7 +16,7 @@ import static com.revature.utils.Encryptor.encodePassword;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin()
+@CrossOrigin("http://localhost:4200")
 public class LoginController {
 
     private UserService userService;
@@ -38,8 +38,11 @@ public class LoginController {
         return ResponseEntity.status(401).build();
     }
 
-    @RequestMapping
-    public void logout(HttpServletRequest request) {
+    @PutMapping
+    public void logout(@RequestBody User user, HttpServletRequest request) {
+        //before logging the user out update any potential stat changes of there's in the database
+        userService.saveUser(user);
+
         HttpSession session = request.getSession();
         session.invalidate();
     }
