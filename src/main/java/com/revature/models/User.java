@@ -33,7 +33,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Statistic> userStats;
 
