@@ -16,7 +16,7 @@ import static com.revature.utils.Encryptor.encodePassword;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 public class LoginController {
 
     private UserService userService;

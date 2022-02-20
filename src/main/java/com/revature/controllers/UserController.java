@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -69,6 +69,23 @@ public class UserController {
 
             //now we need to update the user in the database (feels redundant to me but for now it works)
             userService.saveUser(newUser);
+
+            return ResponseEntity.status(201).body(errorCode);
+        }
+
+        return ResponseEntity.status(400).body(errorCode);
+    }
+    //Todo: Work on implementing this PUT method logic
+    @PutMapping
+    public ResponseEntity<Integer> updateUser(@RequestBody User user){
+        System.out.println(user);
+        User nonUpdatedUser = userService.getUser(user.getUserId());
+        System.out.println(nonUpdatedUser);
+        if(!nonUpdatedUser.getPassword().equals(user.getPassword())){
+            user.setPassword(Encryptor.encodePassword(user.getPassword()));
+        }
+        Integer errorCode = userService.saveUser(user);
+        if (errorCode == 0) {
 
             return ResponseEntity.status(201).body(errorCode);
         }
