@@ -4,6 +4,8 @@ import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.service.UserService;
 import com.revature.utils.Encryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,21 +22,22 @@ import static com.revature.utils.Encryptor.encodePassword;
 public class LoginController {
 
     private UserService userService;
+    private Logger logger = LoggerFactory.getLogger("Login Controller Logger");
 
     @Autowired
     public LoginController(UserService userService) {this.userService = userService;}
 
     @PostMapping
     public ResponseEntity<User> getUserByUsername(@RequestBody UserDTO userDTO, HttpServletRequest request){
-
+        logger.info("New login attempt");
         User user = userService.getUserByUsername(userDTO);
-        String givenPass = userDTO.getPassword();
-        if(user!=null){
-            if (Encryptor.encodePassword(givenPass).equals(user.getPassword())) {
-                request.getSession().setAttribute("user", user.getUserId());
-                return ResponseEntity.status(200).body(user);
-            }
+        if(user != null){
+            logger.info("Login attempt was successful");
+            request.getSession().setAttribute("user", user.getUserId());
+            return ResponseEntity.status(200).body(user);
         }
+
+        logger.info("No user was returned");
         return ResponseEntity.status(401).build();
     }
 
