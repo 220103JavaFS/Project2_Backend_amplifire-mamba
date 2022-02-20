@@ -3,6 +3,7 @@ package com.revature.controllers;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.service.UserService;
+import com.revature.utils.Encryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import static com.revature.utils.Encryptor.encodePassword;
 
 @RestController
 @RequestMapping("/login")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin()
 public class LoginController {
 
     private UserService userService;
@@ -29,7 +30,7 @@ public class LoginController {
         User user = userService.getUserByUsername(userDTO);
         String givenPass = userDTO.getPassword();
         if(user!=null){
-            if (encodePassword(givenPass).equals(user.getPassword())) {
+            if (Encryptor.encodePassword(givenPass).equals(user.getPassword())) {
                 request.getSession().setAttribute("user", user.getUserId());
                 return ResponseEntity.status(200).body(user);
             }
@@ -37,9 +38,12 @@ public class LoginController {
         return ResponseEntity.status(401).build();
     }
 
-    @RequestMapping
-    public void logout(HttpServletRequest request) {
-       HttpSession session = request.getSession();
-       session.invalidate();
+    @PutMapping
+    public void logout(@RequestBody User user, HttpServletRequest request) {
+        //before logging the user out update any potential stat changes of there's in the database
+        userService.saveUser(user);
+
+        HttpSession session = request.getSession();
+        session.invalidate();
     }
 }

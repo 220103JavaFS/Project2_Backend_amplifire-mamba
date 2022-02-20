@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -8,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users") //table name will default to 'user' without this line which SQL doesn't like
-public class User {
+public class    User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Statistic> userStats;
 
