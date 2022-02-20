@@ -40,9 +40,15 @@ public class LoginController {
 
     @PutMapping
     public void logout(@RequestBody User user, HttpServletRequest request) {
-        //before logging the user out update any potential stat changes of there's in the database
-        userService.saveUser(user);
+        //before logging the user out update any potential stat changes of there's in the database. also, check
+        //to make sure that the user hasn't changed their password, if so then make sure to encrypt it first
+        User nonUpdatedUser = userService.getUser(user.getUserId()); //need to call db to check current password
 
+        if(!nonUpdatedUser.getPassword().equals(user.getPassword())){
+            user.setPassword(Encryptor.encodePassword(user.getPassword())); //passwords don't match, encrypt before saving
+        }
+        userService.saveUser(user);
+        System.out.println("called from the logout backend function. user in db is now: " + user);
         HttpSession session = request.getSession();
         session.invalidate();
     }

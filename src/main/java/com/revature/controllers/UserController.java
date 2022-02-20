@@ -75,7 +75,7 @@ public class UserController {
 
         return ResponseEntity.status(400).body(errorCode);
     }
-    //Todo: Work on implementing this PUT method logic
+
     @PutMapping
     public ResponseEntity<Integer> updateUser(@RequestBody User user){
         System.out.println(user);
