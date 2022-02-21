@@ -37,10 +37,14 @@ public class    User {
     @JsonManagedReference
     private List<Statistic> userStats;
 
+    @OneToMany(mappedBy = "statOwner", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<HighScores> userHighScores;
+
     public User() {
     }
 
-    public User(int userId, String username, String password, String email, String firstName, String lastName, List<Statistic> userStats) {
+    public User(int userId, String username, String password, String email, String firstName, String lastName, List<Statistic> userStats, List<HighScores> userHighScores) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -48,6 +52,7 @@ public class    User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userStats = userStats;
+        this.userHighScores = userHighScores;
     }
 
     public int getUserId() {
@@ -106,17 +111,25 @@ public class    User {
         this.userStats = userStats;
     }
 
+    public List<HighScores> getUserHighScores() {
+        return userHighScores;
+    }
+
+    public void setUserHighScores(List<HighScores> userHighScores) {
+        this.userHighScores = userHighScores;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userStats, user.userStats);
+        return userId == user.userId && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userStats, user.userStats) && Objects.equals(userHighScores, user.userHighScores);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, username, password, email, firstName, lastName, userStats);
+        return Objects.hash(userId, username, password, email, firstName, lastName, userStats, userHighScores);
     }
 
     @Override
@@ -129,6 +142,7 @@ public class    User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", userStats=" + userStats +
+                ", userHighScores=" + userHighScores +
                 '}';
     }
 }

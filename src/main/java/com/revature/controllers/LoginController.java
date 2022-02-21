@@ -42,6 +42,7 @@ public class LoginController {
     public void logout(@RequestBody User user, HttpServletRequest request) {
         //before logging the user out update any potential stat changes of there's in the database. also, check
         //to make sure that the user hasn't changed their password, if so then make sure to encrypt it first
+        System.out.println("User logging out:" + user);
         User nonUpdatedUser = userService.getUser(user.getUserId()); //need to call db to check current password
 
         if(!nonUpdatedUser.getPassword().equals(user.getPassword())){
