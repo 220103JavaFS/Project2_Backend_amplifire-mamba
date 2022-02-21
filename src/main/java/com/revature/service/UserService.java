@@ -3,7 +3,11 @@ package com.revature.service;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
 import com.revature.repo.UserDAO;
+import com.revature.utils.Encryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +17,7 @@ import java.util.Optional;
 public class UserService {
 
     private UserDAO userDAO;
-
+    private Logger logger = LoggerFactory.getLogger("Login Service Logger");
 
     @Autowired
     public UserService(UserDAO userDAO) {this.userDAO = userDAO;}
@@ -55,9 +59,17 @@ public class UserService {
         String username = userDTO.getUsername();
         Optional<User> user = userDAO.findByUsername(username);
         if (user.isPresent()) {
-            return user.get();
+            User userObject = user.get();
+            if (Encryptor.encodePassword(userDTO.getPassword()).equals(userObject.getPassword())) {
+                return userObject;
+            }
+
+            logger.info("The provided password did not match what was in the database");
+            return userObject;
         }
-        return new User(); //TODO: Should this return null instead of a user that has null values?
+
+        logger.info("The user record was not found. The username was not correct.");
+        return null; //TODO: Should this return null instead of a user that has null values?
     }
 
     public User findUserByUsername(String username) {
